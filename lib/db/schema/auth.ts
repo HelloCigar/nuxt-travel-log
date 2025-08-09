@@ -1,4 +1,4 @@
-import { sqliteTable, int, text, integer } from "drizzle-orm/sqlite-core";
+import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
   id: int().primaryKey({ autoIncrement: true }),
@@ -11,47 +11,37 @@ export const user = sqliteTable("user", {
 });
 
 export const session = sqliteTable("session", {
-  id: text().primaryKey(),
+  id: int().primaryKey({ autoIncrement: true }),
   expiresAt: integer().notNull(),
   token: text().notNull().unique(),
   createdAt: integer().notNull(),
   updatedAt: integer().notNull(),
   ipAddress: text(),
   userAgent: text(),
-  userId: text().notNull().references(() => user.id, { onDelete: "cascade" }),
+  userId: int().notNull().references(() => user.id, { onDelete: "cascade" }),
 });
 
 export const account = sqliteTable("account", {
-  id: text("id").primaryKey(),
-  accountId: text("account_id").notNull(),
-  providerId: text("provider_id").notNull(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  accessToken: text("access_token"),
-  refreshToken: text("refresh_token"),
-  idToken: text("id_token"),
-  accessTokenExpiresAt: integer("access_token_expires_at", {
-    mode: "timestamp",
-  }),
-  refreshTokenExpiresAt: integer("refresh_token_expires_at", {
-    mode: "timestamp",
-  }),
-  scope: text("scope"),
-  password: text("password"),
-  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
+  id: int().primaryKey({ autoIncrement: true }),
+  accountId: text().notNull(),
+  providerId: text().notNull(),
+  userId: int().notNull().references(() => user.id, { onDelete: "cascade" }),
+  accessToken: text(),
+  refreshToken: text(),
+  idToken: text(),
+  accessTokenExpiresAt: integer(),
+  refreshTokenExpiresAt: integer(),
+  scope: text(),
+  password: text(),
+  createdAt: integer().notNull(),
+  updatedAt: integer().notNull(),
 });
 
 export const verification = sqliteTable("verification", {
-  id: text("id").primaryKey(),
-  identifier: text("identifier").notNull(),
-  value: text("value").notNull(),
-  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
-    () => /* @__PURE__ */ new Date(),
-  ),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(
-    () => /* @__PURE__ */ new Date(),
-  ),
+  id: int().primaryKey({ autoIncrement: true }),
+  identifier: text().notNull(),
+  value: text().notNull(),
+  expiresAt: integer().notNull(),
+  createdAt: integer(),
+  updatedAt: integer(),
 });
