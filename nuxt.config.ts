@@ -23,4 +23,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  icon: {
+    serverBundle: 'local'
+  }
 })
