@@ -1,9 +1,9 @@
-import type { User } from 'better-auth'
+import type { User } from "better-auth";
 
-declare module 'h3' {
-    interface H3EventContext {
-        user?: Omit<User, "id"> & {
-            id: number
-        }
-    }
+declare module "h3" {
+  interface H3EventContext {
+    user?: Omit<User, "id"> & {
+      id: number;
+    };
+  }
 }
