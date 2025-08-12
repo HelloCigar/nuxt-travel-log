@@ -1,4 +1,4 @@
-import { string, z } from 'zod';
+import { z } from 'zod';
 import tryParseEnv from './try-parse-env'
 
 const EnvSchema = z.object({

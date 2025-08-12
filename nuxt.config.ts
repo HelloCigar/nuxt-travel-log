@@ -27,5 +27,8 @@ export default defineNuxtConfig({
   },
   icon: {
     serverBundle: 'local'
+  },
+  build:{
+    transpile: ['zod']
   }
 })
