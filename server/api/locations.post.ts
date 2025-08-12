@@ -1,14 +1,14 @@
-import { and, DrizzleError, eq } from "drizzle-orm";
+import { DrizzleError } from "drizzle-orm";
 import slugify from "slug";
-import db from "~~/lib/db";
-import { InsertLocation, location, user } from "~~/lib/db/schema";
+import { InsertLocation } from "~~/lib/db/schema";
 import {
   findLocationByName,
   findUniqueSlug,
   insertLocation,
 } from "~~/lib/db/queries/location";
+import defineAuthenticatedEventHandler from "../utils/define-authenticated-event-handler";
 
-export default defineEventHandler(async (event) => {
+export default defineAuthenticatedEventHandler(async (event) => {
   if (!event.context.user) {
     return sendError(
       event,
