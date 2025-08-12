@@ -26,10 +26,8 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
-      include: [
-        "maplibre-gl"
-      ]
-    }
+      include: ["maplibre-gl"],
+    },
   },
   icon: {
     serverBundle: "local",
