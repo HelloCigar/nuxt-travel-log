@@ -15,10 +15,10 @@ onMounted(() => {
     </div>
     <div
       v-else-if="locations && locations.length > 0"
-      class="flex flex-wrap mt-4 gap-2"
+      class="flex flex-nowrap mt-4 gap-2 overflow-auto"
     >
       <div
-        class="card card-compact bg-base-300 h-40 w-72"
+        class="card card-compact bg-base-300 h-40 w-72 shrink-0"
         v-for="location in locations"
         :key="location.id"
       >

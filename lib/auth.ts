@@ -5,7 +5,7 @@ import db from "./db"; // your drizzle instance
 import env from "./env";
 import { createAuthMiddleware } from "better-auth/api";
 
-export type UserWithId =  Omit<User, "id"> & {
+export type UserWithId = Omit<User, "id"> & {
   id: number;
 };
 

@@ -32,7 +32,7 @@ export async function findUniqueSlug(slug: string) {
     }
   }
 
-  return slug
+  return slug;
 }
 
 export async function insertLocation(
@@ -51,9 +51,8 @@ export async function insertLocation(
   return created;
 }
 
-
 export async function findLocations(userId: number) {
-    return db.query.location.findMany({
-        where: eq(location.userId, userId)
-    })
+  return db.query.location.findMany({
+    where: eq(location.userId, userId),
+  });
 }
