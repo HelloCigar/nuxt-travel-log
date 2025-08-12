@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vee-validate/nuxt",
     "nuxt-csurf",
+    "nuxt-maplibre",
   ],
   colorMode: {
     dataValue: "theme",
@@ -24,6 +25,11 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: [
+        "maplibre-gl"
+      ]
+    }
   },
   icon: {
     serverBundle: "local",
