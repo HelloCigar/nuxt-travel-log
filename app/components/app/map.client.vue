@@ -1,11 +1,16 @@
 <script setup lang="ts">
-const style = "https://demotiles.maplibre.org/style.json";
-const center = [-1.559482, 47.21322];
+import { CENTER_TULUNAN } from "~~/lib/constants";
+const colorMode = useColorMode();
+const style = computed(() =>
+  colorMode.value === "dark"
+    ? "/styles/dark.json"
+    : "https://tiles.openfreemap.org/styles/liberty"
+);
 const zoom = 8;
 </script>
 
 <template>
-  <MglMap :map-style="style" :center="center" :zoom="zoom">
+  <MglMap :map-style="style" :center="CENTER_TULUNAN" :zoom="zoom">
     <MglNavigationControl />
   </MglMap>
 </template>
