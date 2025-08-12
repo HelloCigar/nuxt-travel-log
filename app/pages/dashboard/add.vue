@@ -27,7 +27,10 @@ const onSubmit = handleSubmit(async (values) => {
     if (error.data?.data) {
       setErrors(error.data?.data);
     }
-    submitError.value = error.statusMessage || "An unknown error occured.";
+    submitError.value =
+      error.data?.statusMessage ||
+      error.statusMessage ||
+      "An unknown error occured.";
   }
   loading.value = false;
 });
@@ -35,7 +38,7 @@ const onSubmit = handleSubmit(async (values) => {
 onBeforeRouteLeave(() => {
   if (!submitted.value && meta.value.dirty) {
     const confirm = window.confirm(
-      "Are you sure you want to leave? All unsaved changes will be lost.",
+      "Are you sure you want to leave? All unsaved changes will be lost."
     );
     if (!confirm) {
       return false;
