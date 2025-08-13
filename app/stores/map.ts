@@ -4,12 +4,7 @@ import type { MapPoint } from "~~/lib/types";
 export const useMapStore = defineStore("useMapStore", () => {
   const mapPoints = ref<MapPoint[]>([]);
   const selectedPoint = ref<MapPoint | null>(null);
-  const shouldFlyTo = ref(true)
-
-  function selectedPointWithoutFlyTo(point: MapPoint | null){
-    shouldFlyTo.value = false;
-    selectedPoint.value = point;
-  }
+  const addedPoint = ref<MapPoint | null>(null);
 
   async function init() {
     const { LngLatBounds } = await import("maplibre-gl");
@@ -34,23 +29,20 @@ export const useMapStore = defineStore("useMapStore", () => {
 
         map.map?.fitBounds(bounds, {
             padding,
+            maxZoom: 10,
         });
     });
 
-    effect(() => {
-        if (selectedPoint.value) {
-            if (shouldFlyTo.value) {
-                map.map?.flyTo({
-                    center: [selectedPoint.value.long, selectedPoint.value.lat],
-                    speed: 1
+    watch(addedPoint, (newValue, oldValue) => {
+        if (newValue && !oldValue) {
+             map.map?.flyTo({
+                    center: [newValue.long, newValue.lat],
+                    speed: 1,
+                    zoom: 6
                 })
-            }
-            shouldFlyTo.value = true
-        } else if (bounds) {
-            map.map?.fitBounds(bounds, {
-                padding,
-            })
         }
+    },{
+        immediate: true
     })
   }
 
@@ -58,6 +50,6 @@ export const useMapStore = defineStore("useMapStore", () => {
     init,
     mapPoints,
     selectedPoint,
-    selectedPointWithoutFlyTo
+    addedPoint,
   };
 });

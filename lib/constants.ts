@@ -1,3 +1,3 @@
 import type { LngLatLike } from "maplibre-gl";
 
-export const CENTER_TULUNAN = [124.8747, 6.8304] as LngLatLike;
+export const CENTER_MANILA = [120.9842, 14.5995] as LngLatLike;
