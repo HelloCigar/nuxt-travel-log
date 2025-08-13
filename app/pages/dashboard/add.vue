@@ -20,6 +20,12 @@ const {
   controlledValues,
 } = useForm({
   validationSchema: toTypedSchema(InsertLocation),
+  initialValues: {
+    name: "",
+    description: "",
+    lat: (CENTER_MANILA as [number, number])[1],
+    long: (CENTER_MANILA as [number, number])[0],
+  },
 });
 
 const onSubmit = handleSubmit(async (values) => {

@@ -35,7 +35,7 @@ function updateAddedPoint(location: LngLat) {
     >
       <template v-slot:marker>
         <div
-          class="tooltip tooltip-top hover:cursor-pointer"
+          class="tooltip tooltip-top tooltip-open hover:cursor-pointer"
           data-tip="Drag to your desired location"
         >
           <Icon name="tabler:map-pin-filled" size="30" class="text-warning" />
@@ -54,8 +54,8 @@ function updateAddedPoint(location: LngLat) {
           :class="{
             'tooltip-open': mapStore.selectedPoint === point,
           }"
-          @mouseenter="mapStore.selectedPointWithoutFlyTo(point)"
-          @mouseleave="mapStore.selectedPointWithoutFlyTo(null)"
+          @mouseenter="mapStore.selectedPoint = point"
+          @mouseleave="mapStore.selectedPoint = null"
         >
           <Icon
             name="tabler:map-pin-filled"
