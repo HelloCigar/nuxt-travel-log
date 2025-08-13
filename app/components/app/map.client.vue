@@ -29,6 +29,14 @@ const zoom = 8;
           <Icon name="tabler:map-pin-filled" size="30" class="text-secondary" />
         </div>
       </template>
+      <MglPopup>
+        <h3 class="text-xl">
+          {{ point.label }}
+        </h3>
+        <p v-if="point.description">
+          {{ point.description }}
+        </p>
+      </MglPopup>
     </MglMarker>
   </MglMap>
 </template>
