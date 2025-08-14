@@ -1,4 +1,4 @@
-import type { EventHandler, H3Event, H3EventContext } from "h3";
+import type { H3Event, H3EventContext } from "h3";
 import { UserWithId } from "~~/lib/auth";
 
 type AuthenticatedEvent = H3Event & {
