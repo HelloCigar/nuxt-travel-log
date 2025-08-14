@@ -1,5 +1,5 @@
 import type { H3Event, H3EventContext } from "h3";
-import { UserWithId } from "~~/lib/auth";
+import type { UserWithId } from "~~/lib/auth";
 
 type AuthenticatedEvent = H3Event & {
   context: H3EventContext & {

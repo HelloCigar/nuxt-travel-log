@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "typecheck": "nuxi typecheck"
   },
   "dependencies": {
     "@indoorequal/vue-maplibre-gl": "^8.4.1",

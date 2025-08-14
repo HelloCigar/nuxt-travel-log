@@ -66,7 +66,7 @@ function onDoubleClick(mglEvent: MglEvent<"dblclick">) {
           class="tooltip tooltip-top hover:cursor-pointer"
           :data-tip="point.name"
           :class="{
-            'tooltip-open': mapStore.selectedPoint === point,
+            'tooltip-open': isPointSelected(point, mapStore.selectedPoint),
           }"
           @mouseenter="mapStore.selectedPoint = point"
           @mouseleave="mapStore.selectedPoint = null"
@@ -75,7 +75,7 @@ function onDoubleClick(mglEvent: MglEvent<"dblclick">) {
             name="tabler:map-pin-filled"
             size="30"
             :class="
-              mapStore.selectedPoint === point
+              isPointSelected(point, mapStore.selectedPoint)
                 ? 'text-accent'
                 : 'text-secondary'
             "
@@ -89,6 +89,15 @@ function onDoubleClick(mglEvent: MglEvent<"dblclick">) {
         <p v-if="point.description">
           {{ point.description }}
         </p>
+        <div class="flex items-end">
+          <NuxtLink
+            v-if="point.to"
+            :to="point.to"
+            class="btn btn-sm btn-outline"
+          >
+            {{ point.toLabel }}
+          </NuxtLink>
+        </div>
       </MglPopup>
     </MglMarker>
   </MglMap>
