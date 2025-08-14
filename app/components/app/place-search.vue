@@ -87,7 +87,7 @@ function setLocation(result: NominatimResult) {
     <div v-if="loading" class="flex justify-center">
       <div class="loading loading-lg"></div>
     </div>
-    <div class="flex flex-col overflow-auto gap-2 max-h-56 mt-3">
+    <div class="flex flex-col overflow-auto gap-2 max-h-52 mt-3">
       <div
         v-for="result in searchResults"
         class="card card-sm bg-base-100"
