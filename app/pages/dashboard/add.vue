@@ -3,6 +3,7 @@ import { InsertLocation } from "~~/lib/db/schema";
 import { toTypedSchema } from "@vee-validate/zod";
 import type { FetchError } from "ofetch";
 import { CENTER_MANILA } from "~~/lib/constants";
+import type { NominatimResult } from "~~/lib/types";
 const { $csrfFetch } = useNuxtApp();
 
 const mapStore = useMapStore();
@@ -43,10 +44,7 @@ const onSubmit = handleSubmit(async (values) => {
     if (error.data?.data) {
       setErrors(error.data?.data);
     }
-    submitError.value =
-      error.data?.statusMessage ||
-      error.statusMessage ||
-      "An unknown error occured.";
+    submitError.value = getFetchErrorMessage(error);
   }
   loading.value = false;
 });
@@ -56,6 +54,18 @@ function formatNumber(value?: number) {
     return 0;
   }
   return value.toFixed(5);
+}
+
+function searchResultSelected(result: NominatimResult) {
+  setFieldValue("name", result.display_name);
+  mapStore.addedPoint = {
+    lat: Number(result.lat),
+    long: Number(result.lon),
+    description: "",
+    name: "Added Point",
+    id: 1,
+    centerMap: true,
+  };
 }
 
 effect(() => {
@@ -130,16 +140,21 @@ onBeforeRouteLeave(() => {
         type="textarea"
         :disabled="loading"
       />
-      <p>
-        Drag the
-        <Icon name="tabler:map-pin-filled" class="text-warning" /> marker to
-        your desired location
-      </p>
-      <p>Or double-click on the map.</p>
       <p class="text-xs text-gray-400">
-        Current location: {{ formatNumber(controlledValues.lat) }},
+        Current coordinates: {{ formatNumber(controlledValues.lat) }},
         {{ formatNumber(controlledValues.long) }}
       </p>
+      <p>To set the location:</p>
+      <ul class="list-disc ml-4 text-sm">
+        <li>
+          Drag the
+          <Icon name="tabler:map-pin-filled" class="text-warning" /> marker on
+          the map.
+        </li>
+        <li>Double-click on the map.</li>
+        <li>Search for a location below.</li>
+      </ul>
+
       <div class="flex justify-end gap-2">
         <button
           :disabled="loading"
@@ -160,5 +175,7 @@ onBeforeRouteLeave(() => {
         </button>
       </div>
     </form>
+    <div class="divider"></div>
+    <AppPlaceSearch @result-selected="searchResultSelected" />
   </div>
 </template>

@@ -1,9 +1,6 @@
-import z from "zod"
 import sendZodError from "../utils/send-zod-error"
-
-const searchSchema = z.object({
-    q: z.string().min(1),
-})
+import {searchSchema} from '~~/lib/zod-schemas'
+import { NominatimResult } from '~~/lib/types'
 
 export default defineAuthenticatedEventHandler(
     defineCachedEventHandler(async (event) => {
@@ -28,7 +25,7 @@ export default defineAuthenticatedEventHandler(
                 }))
             }
             
-            const results = await response.json();
+            const results = await response.json() as NominatimResult[];
             return results
 
         } catch {
