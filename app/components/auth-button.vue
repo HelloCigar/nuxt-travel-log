@@ -27,17 +27,40 @@ const authStore = useAuthStore();
       </li>
     </ul>
   </div>
-  <button
-    v-else
-    :disabled="authStore.loading"
-    class="btn btn-accent"
-    @click="authStore.signIn"
-  >
-    Sign In With Github
-    <span
-      v-if="authStore.loading"
-      class="loading loading-spinner loading-md"
-    ></span>
-    <Icon v-else name="tabler:brand-github" size="24" />
-  </button>
+  <div v-else class="dropdown dropdown-end">
+    <div tabindex="0" role="button" class="btn m-1">Sign In ⬇️</div>
+    <ul
+      tabindex="0"
+      class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+    >
+      <li>
+        <button
+          :disabled="authStore.loading"
+          class="btn btn-accent"
+          @click="authStore.signIn('github')"
+        >
+          Sign In With Github
+          <span
+            v-if="authStore.loading"
+            class="loading loading-spinner loading-md"
+          ></span>
+          <Icon v-else name="tabler:brand-github" size="24" />
+        </button>
+      </li>
+      <li>
+        <button
+          :disabled="authStore.loading"
+          class="btn btn-accent mt-2"
+          @click="authStore.signIn('google')"
+        >
+          Sign In With Google
+          <span
+            v-if="authStore.loading"
+            class="loading loading-spinner loading-md"
+          ></span>
+          <Icon v-else name="tabler:brand-google" size="24" />
+        </button>
+      </li>
+    </ul>
+  </div>
 </template>

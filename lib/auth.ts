@@ -21,18 +21,9 @@ export const auth = betterAuth({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     },
-  },
-  hooks: {
-    after: createAuthMiddleware(async (ctx) => {
-      if (ctx.path === "/get-session") {
-        if (!ctx.context.session) {
-          return ctx.json({
-            session: null,
-            user: null,
-          });
-        }
-      }
-      return ctx.json(ctx.context.session);
-    }),
+    google: {
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET
+    }
   },
 });

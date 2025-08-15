@@ -23,7 +23,6 @@ function onSubmitComplete() {
 </script>
 
 <template>
-  <h2>Location Log Add Page!</h2>
   <LocationForm
     v-if="locationStore.currentLocationStatus !== 'pending'"
     :on-submit
