@@ -116,6 +116,7 @@ onBeforeRouteUpdate((to) => {
       <div
         v-else-if="
           location?.locationLogs.length &&
+          !loading &&
           route.name == 'dashboard-location-slug'
         "
         class="location-list"

@@ -65,12 +65,20 @@ export const useLocationStore = defineStore("useLocationStore", () => {
           mapPoint
         });
         mapPoints.push(mapPoint)
-      });
-      
-      sidebarStore.sidebarItems = sidebarItems
-      mapStore.mapPoints = mapPoints
+      })
+
+      sidebarStore.sidebarItems = sidebarItems;
+
+      if (mapPoints.length) {
+        mapStore.mapPoints = mapPoints
+      } else {
+        mapStore.mapPoints = [currentLocation.value]
+      }
     }
-    sidebarStore.loading = locationStatus.value;
+    sidebarStore.loading = locationStatus.value || currentLocationStatus.value;
+    if (sidebarStore.loading) {
+      mapStore.mapPoints = []
+    }
   });
 
   return {
