@@ -3,7 +3,7 @@ import { location } from "./location";
 import { user } from "./auth";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
-import { DescriptionSchema, LatSchema, LongSchema, NameSchema } from "~~/lib/zod-schemas";
+import { DescriptionSchema, LatSchema, LongSchema, NameSchema } from "../../zod-schemas";
 import z from "zod";
 
 export const locationLog = sqliteTable("locationLog", {
