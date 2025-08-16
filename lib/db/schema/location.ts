@@ -4,7 +4,7 @@ import { user } from "./auth";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
 import { locationLog, type SelectLocationLog } from "./location-log";
-import { DescriptionSchema, LatSchema, LongSchema, NameSchema } from "~~/lib/zod-schemas";
+import { DescriptionSchema, LatSchema, LongSchema, NameSchema } from "../../zod-schemas";
 
 export const location = sqliteTable(
   "location",
