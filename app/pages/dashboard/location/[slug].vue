@@ -13,7 +13,7 @@ const isOpen = ref(false);
 const deleteError = ref("");
 const isDeleting = ref(false);
 
-const loading = computed(() => status.value === "pending" || isDeleting.value);
+const loading = computed(() => status.value || isDeleting.value);
 const errorMessage = computed(
   () => error.value?.statusMessage || deleteError.value
 );
@@ -116,6 +116,7 @@ onBeforeRouteUpdate((to) => {
       <div
         v-else-if="
           location?.locationLogs.length &&
+          !loading &&
           route.name == 'dashboard-location-slug'
         "
         class="location-list"
