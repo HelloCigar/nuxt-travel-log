@@ -24,6 +24,7 @@ export const useLocationStore = defineStore("useLocationStore", () => {
     immediate: false,
     watch: false
   });
+  
 
   const sidebarStore = useSidebarStore();
   const mapStore = useMapStore();
