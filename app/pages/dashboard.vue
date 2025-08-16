@@ -52,7 +52,7 @@ effect(() => {
       {
         id: "link-dashboard",
         label:
-          currentLocationStatus.value === "pending" || !currentLocation.value
+          currentLocationStatus.value || !currentLocation.value
             ? "Loading..."
             : currentLocation.value.name,
         to: {

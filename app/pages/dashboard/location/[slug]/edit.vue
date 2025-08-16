@@ -24,10 +24,7 @@ function onSubmitComplete() {
 
 <template>
   <LocationForm
-    v-if="
-      locationStore.currentLocationStatus !== 'pending' &&
-      locationStore.currentLocation
-    "
+    v-if="!locationStore.currentLocationStatus && locationStore.currentLocation"
     :on-submit
     :on-submit-complete
     :initial-values="locationStore.currentLocation"

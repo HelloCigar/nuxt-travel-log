@@ -2,13 +2,10 @@ import type { SelectLocationWithLogs } from "~~/lib/db/schema";
 import type { MapPoint } from "~~/lib/types";
 import { CURRENT_LOCATION_PAGES, LOCATION_PAGES } from "~~/lib/constants";
 
-const listLocationsInSidebar = new Set(['dashboard', 'dashboard-add'])
-const listCurrentLocationsInSidebar = new Set(['dashboard-location-slug', 'dashboard-location-slug-add', 'dashboard-location-slug-edit'])
-
 export const useLocationStore = defineStore("useLocationStore", () => {
   const route = useRoute()
 
-  const { data: locations, status: locationStatus, refresh: refreshLocations } = useFetch("/api/locations", {
+  const { data: locations, pending: locationStatus, refresh: refreshLocations } = useFetch("/api/locations", {
     lazy: true,
   });
 
@@ -16,7 +13,7 @@ export const useLocationStore = defineStore("useLocationStore", () => {
 
   const {
     data: currentLocation,
-    status: currentLocationStatus,
+    pending: currentLocationStatus,
     error: currentLocationError,
     refresh: refreshCurrentLocation
   } = useFetch<SelectLocationWithLogs>(locationUrlWithSlug, {
@@ -52,10 +49,28 @@ export const useLocationStore = defineStore("useLocationStore", () => {
       sidebarStore.sidebarItems = sidebarItems
       mapStore.mapPoints = mapPoints
     }  else if (currentLocation.value && CURRENT_LOCATION_PAGES.has(route.name?.toString() || "")) {
-      sidebarStore.sidebarItems = []
-      mapStore.mapPoints = [currentLocation.value]
+      const mapPoints: MapPoint[] = []
+      const sidebarItems: SidebarItem[] = []  
+
+      currentLocation.value.locationLogs.forEach((log) => {
+        const mapPoint = createMapPointFromLocationLog(log)
+        sidebarItems.push({
+          id: `location-log-${log.id}`,
+          label: log.name,
+          icon: "tabler:map-pin-filled",
+          to: {
+            name: 'dashboard-location-slug-id',
+            params: { id: log.id },
+          },
+          mapPoint
+        });
+        mapPoints.push(mapPoint)
+      });
+      
+      sidebarStore.sidebarItems = sidebarItems
+      mapStore.mapPoints = mapPoints
     }
-    sidebarStore.loading = locationStatus.value === "pending";
+    sidebarStore.loading = locationStatus.value;
   });
 
   return {

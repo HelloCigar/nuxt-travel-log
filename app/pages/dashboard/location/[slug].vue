@@ -13,7 +13,7 @@ const isOpen = ref(false);
 const deleteError = ref("");
 const isDeleting = ref(false);
 
-const loading = computed(() => status.value === "pending" || isDeleting.value);
+const loading = computed(() => status.value || isDeleting.value);
 const errorMessage = computed(
   () => error.value?.statusMessage || deleteError.value
 );

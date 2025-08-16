@@ -11,7 +11,7 @@ onMounted(() => {
 <template>
   <div class="page-content-top">
     <h2 class="text-2xl">Locations</h2>
-    <div v-if="status === 'pending'">
+    <div v-if="status">
       <span class="loading loading-spinner loading-sm"></span>
     </div>
     <div v-else-if="locations && locations.length > 0" class="location-list">
