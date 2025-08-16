@@ -8,12 +8,14 @@ const props = defineProps<{
   onSubmitComplete: () => void;
   submitLabel: string;
   submitIcon: string;
+  zoom?: number;
 }>();
 </script>
 
 <template>
   <LocationBaseForm
     :schema="InsertLocation"
+    :zoom="props.zoom || 6"
     :initial-values="
       props.initialValues || {
         name: '',
