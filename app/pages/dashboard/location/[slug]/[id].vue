@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { FetchError } from "ofetch";
+import { location } from "~~/lib/db/schema";
 
 const route = useRoute();
 const locationStore = useLocationStore();
@@ -124,6 +125,22 @@ onBeforeRouteUpdate((to) => {
       <p class="text-sm">
         {{ locationLog.description }}
       </p>
+      <div v-if="!locationLog.images.length" class="flex flex-col gap-2 mt-4">
+        <NuxtLink
+          :to="{
+            name: 'dashboard-location-slug-id-images',
+            params: {
+              slug: route.params.slug,
+              id: route.params.id,
+            },
+          }"
+          class="btn btn-primary w-40"
+        >
+          Add Image
+          <Icon name="tabler:photo-cog" size="24"></Icon>
+        </NuxtLink>
+      </div>
+      <ImageList :images="locationLog.images" />
     </div>
     <div v-else>
       <NuxtPage />

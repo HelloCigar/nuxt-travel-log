@@ -26,7 +26,14 @@ export async function findLocationLog(
         where: and(
             eq(locationLog.id, id),
             eq(locationLog.userId, userId)
-        )
+        ),
+        with: {
+            images: {
+                orderBy(fields, operators) {
+                    return operators.desc(fields.createdAt)
+                }
+            }
+        }
     })
 
     return foundLog

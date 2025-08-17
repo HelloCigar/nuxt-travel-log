@@ -1,5 +1,6 @@
 import tailwindcss from "@tailwindcss/vite";
 import "./lib/env";
+import env from "./lib/env";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -23,11 +24,21 @@ export default defineNuxtConfig({
       standalone: false,
     },
   },
+  runtimeConfig: {
+    public: {
+      s3BucketUrl: env.S3_BUCKET_URL
+    }
+  },
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
       include: ["maplibre-gl"],
     },
+    server: {
+      watch: {
+        ignored: ["./docker-data/*"]
+      }
+    }
   },
   icon: {
     serverBundle: "local",
