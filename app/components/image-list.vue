@@ -4,6 +4,8 @@ import type { SelectLocationLogImage } from "~~/lib/db/schema";
 defineProps<{
   images: SelectLocationLogImage[];
 }>();
+
+const config = useRuntimeConfig();
 </script>
 
 <template>
@@ -16,7 +18,7 @@ defineProps<{
       <div class="card-body size-full">
         <img
           class="size-full object-cover"
-          :src="`http://localhost:9000/images/${image.key}`"
+          :src="`${config.public.s3BucketUrl}/${image.key}`"
         />
       </div>
     </div>
