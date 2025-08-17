@@ -3,6 +3,7 @@ import { locationLog } from "./location-log";
 import { user } from "./auth";
 import { createInsertSchema } from "drizzle-zod";
 import type z from "zod";
+import { relations } from "drizzle-orm";
 
 export const locationLogImage = sqliteTable("locationLogImage", {
   id: int().primaryKey({ autoIncrement: true }),
@@ -32,4 +33,12 @@ export const InsertLocationLogImage = createInsertSchema(locationLogImage, {
   updatedAt: true
 })
 
+export const locationLogImageRelations = relations(locationLogImage, ({ one }) => ({
+  locationLog: one(locationLog, {
+    fields: [locationLogImage.locationLogId],
+    references: [locationLog.id]
+  }),
+}))
+
 export type InsertLocationLogImage = z.infer<typeof InsertLocationLogImage>
+export type SelectLocationLogImage = typeof locationLogImage.$inferSelect

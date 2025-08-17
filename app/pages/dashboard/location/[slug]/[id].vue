@@ -124,6 +124,7 @@ onBeforeRouteUpdate((to) => {
       <p class="text-sm">
         {{ locationLog.description }}
       </p>
+      <ImageList :images="locationLog.images" />
     </div>
     <div v-else>
       <NuxtPage />
