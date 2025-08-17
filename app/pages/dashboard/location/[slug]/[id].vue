@@ -10,8 +10,14 @@ const {
 const loading = computed(() => pending.value);
 const errorMessage = computed(() => error.value?.statusMessage);
 
-onMounted(() => {
-  locationStore.refreshCurrentLogLocation();
+// onMounted(() => {
+//   locationStore.refreshCurrentLocationLog();
+// });
+
+onBeforeRouteUpdate((to) => {
+  if (to.name == "dashboard-location-slug-id") {
+    locationStore.refreshCurrentLocationLog();
+  }
 });
 </script>
 
@@ -81,6 +87,9 @@ onMounted(() => {
       <p class="text-sm">
         {{ locationLog.description }}
       </p>
+    </div>
+    <div v-else>
+      <NuxtPage />
     </div>
   </div>
 </template>

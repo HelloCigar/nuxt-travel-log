@@ -27,7 +27,7 @@ export const useLocationStore = defineStore("useLocationStore", () => {
     data: currentLocationLog,
     pending: currentLocationLogStatus,
     error: currentLocationLogError,
-    refresh: refreshCurrentLogLocation
+    refresh: refreshCurrentLocationLog
   } = useFetch<SelectLocationLog>(locationLogUrlWithSlugAndId, {
     lazy: true,
     immediate: false,
@@ -107,6 +107,6 @@ export const useLocationStore = defineStore("useLocationStore", () => {
     currentLocationLog,
     currentLocationLogStatus,
     currentLocationLogError,
-    refreshCurrentLogLocation
+    refreshCurrentLocationLog
   };
 });
