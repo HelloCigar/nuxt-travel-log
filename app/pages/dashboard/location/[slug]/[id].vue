@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { FetchError } from "ofetch";
+
 const route = useRoute();
 const locationStore = useLocationStore();
 const {
@@ -7,12 +9,44 @@ const {
   currentLocationLogError: error,
 } = storeToRefs(locationStore);
 
-const loading = computed(() => pending.value);
-const errorMessage = computed(() => error.value?.statusMessage);
+const isOpen = ref(false);
+const deleteError = ref("");
+const isDeleting = ref(false);
 
-// onMounted(() => {
-//   locationStore.refreshCurrentLocationLog();
-// });
+const loading = computed(() => isDeleting.value || pending.value);
+const errorMessage = computed(
+  () => deleteError.value || error.value?.statusMessage
+);
+
+function openDialog() {
+  isOpen.value = true;
+  (document.activeElement as HTMLAnchorElement).blur();
+}
+
+async function confirmDelete() {
+  try {
+    isOpen.value = false;
+    deleteError.value = "";
+    isDeleting.value = true;
+    await $fetch(`/api/locations/${route.params.slug}/${route.params.id}`, {
+      method: "DELETE",
+    });
+    navigateTo({
+      name: "dashboard-location-slug",
+      params: {
+        slug: route.params.slug,
+      },
+    });
+  } catch (e) {
+    const error = e as FetchError;
+    deleteError.value = getFetchErrorMessage(error);
+  }
+  isDeleting.value = false;
+}
+
+onMounted(() => {
+  locationStore.refreshCurrentLocationLog();
+});
 
 onBeforeRouteUpdate((to) => {
   if (to.name == "dashboard-location-slug-id") {
@@ -52,7 +86,7 @@ onBeforeRouteUpdate((to) => {
       </p>
       <h2 class="text-xl">
         {{ locationLog.name }}
-        <!-- <div class="dropdown dropdown-bottom">
+        <div class="dropdown dropdown-bottom">
           <div tabindex="0" role="button" class="btn btn-sm m-1 p-0">
             <Icon name="tabler:dots-vertical" size="20" />
           </div>
@@ -63,8 +97,11 @@ onBeforeRouteUpdate((to) => {
             <li>
               <NuxtLink
                 :to="{
-                  name: 'dashboard-location-slug-edit',
-                  params: { slug: route.params.slug },
+                  name: 'dashboard-location-slug-id-edit',
+                  params: {
+                    slug: route.params.slug,
+                    id: route.params.id,
+                  },
                 }"
               >
                 <Icon name="tabler:map-pin-cog" size="20" />
@@ -82,7 +119,7 @@ onBeforeRouteUpdate((to) => {
               </NuxtLink>
             </li>
           </ul>
-        </div> -->
+        </div>
       </h2>
       <p class="text-sm">
         {{ locationLog.description }}
@@ -91,5 +128,15 @@ onBeforeRouteUpdate((to) => {
     <div v-else>
       <NuxtPage />
     </div>
+    <AppDialog
+      title="Are you sure?"
+      description="Deleting this location log cannot be undone. Do you really want to do this?"
+      cancel-label="Cancel"
+      confirm-label="Yes, delete this location log!"
+      confirm-class="btn-error"
+      :is-open="isOpen"
+      @on-closed="isOpen = false"
+      @on-confirmed="confirmDelete"
+    />
   </div>
 </template>
