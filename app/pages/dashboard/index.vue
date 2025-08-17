@@ -9,7 +9,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="page-content-top">
+  <div class="p-4 min-h-64">
     <h2 class="text-2xl">Locations</h2>
     <div v-if="status">
       <span class="loading loading-spinner loading-sm"></span>
