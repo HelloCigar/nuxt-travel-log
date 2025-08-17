@@ -66,7 +66,7 @@ async function uploadImage() {
 
             formData.append("file", blob)
 
-            $fetch(url, {
+            await $fetch(url, {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -74,7 +74,14 @@ async function uploadImage() {
                 }
             })
 
-            console.log(`${url}/${key}`);
+            const result = await $csrfFetch(`/api/locations/${route.params.slug}/${route.params.id}/image`, {
+                method: "POST",
+                body: {
+                    key
+                }
+            })
+
+            console.log(result);
             
     
         } catch (e) {
