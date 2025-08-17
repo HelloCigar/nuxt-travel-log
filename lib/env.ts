@@ -10,7 +10,12 @@ const EnvSchema = z.object({
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
-  GOOGLE_CLIENT_SECRET: z.string()
+  GOOGLE_CLIENT_SECRET: z.string(),
+  S3_ENDPOINT: z.string(),
+  S3_ACCESS_KEY: z.string(),
+  S3_ACCESS_SECRET: z.string(),
+  S3_REGION: z.string(),
+  S3_BUCKET: z.string(),
 });
 
 export type EnvSchema = z.infer<typeof EnvSchema>;

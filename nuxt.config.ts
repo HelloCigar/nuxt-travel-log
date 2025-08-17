@@ -28,6 +28,11 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ["maplibre-gl"],
     },
+    server: {
+      watch: {
+        ignored: ["./docker-data/*"]
+      }
+    }
   },
   icon: {
     serverBundle: "local",
