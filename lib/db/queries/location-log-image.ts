@@ -1,5 +1,6 @@
-import { locationLogImage, type InsertLocationLogImage } from "../schema"
+import { locationLog, locationLogImage, type InsertLocationLogImage } from "../schema"
 import db from '../../db'
+import { and, eq } from "drizzle-orm";
 
 export async function insertLocationLogImage(
     locationLogId: number,
@@ -13,4 +14,18 @@ export async function insertLocationLogImage(
     }).returning()
 
     return inserted;
+}
+
+export async function deleteLocationLogImage(
+    imageId: number,
+    userId: number,
+) {
+    const [deleted] = await db.delete(locationLogImage).where(
+        and(
+            eq(locationLogImage.id, imageId),
+            eq(locationLogImage.userId, userId)
+        ),
+    ).returning();
+
+    return deleted
 }

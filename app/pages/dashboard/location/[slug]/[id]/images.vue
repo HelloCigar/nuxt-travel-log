@@ -1,17 +1,57 @@
 <script lang="ts" setup>
 import { FetchError } from "ofetch";
+import type { SelectLocationLogImage } from "~~/lib/db/schema";
 
 const route = useRoute();
 const locationsStore = useLocationStore();
 const { currentLocationLog: locationLog } = storeToRefs(locationsStore);
+const { $csrfFetch } = useNuxtApp();
 
 const image = ref<File | null>(null);
 const previewUrl = ref<string | null>();
 const loading = ref(false);
 const errorMessage = ref("");
 const imageInput = useTemplateRef("imageInput");
+const isOpen = ref(false);
+const isDeleting = ref(false);
+const deletingImage = ref<SelectLocationLogImage | null>(null);
 
-const { $csrfFetch } = useNuxtApp();
+function onDialogClose() {
+  deletingImage.value = null;
+  isOpen.value = false;
+}
+
+async function deleteImage(image: SelectLocationLogImage) {
+  deletingImage.value = image;
+  isOpen.value = true;
+}
+
+async function confirmDelete() {
+  console.log("delete the image...", deletingImage.value?.id);
+  if (!deletingImage.value) {
+    return;
+  }
+
+  isOpen.value = false;
+  isDeleting.value = true;
+  try {
+    errorMessage.value = "";
+    await $fetch(
+      `/api/locations/${route.params.slug}/${route.params.id}/image/${deletingImage.value.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    await locationsStore.refreshCurrentLocationLog();
+  } catch (e) {
+    const error = e as FetchError;
+
+    errorMessage.value = getFetchErrorMessage(error);
+  }
+
+  isDeleting.value = false;
+}
 
 function selectImage(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0];
@@ -152,7 +192,32 @@ async function uploadImage() {
           <Icon name="tabler:photo-up" size="24" />
         </button>
       </div>
-      <ImageList class="ml-2" :images="locationLog?.images || []" />
+      <ImageList class="ml-2" :images="locationLog?.images || []">
+        <template v-slot="{ image: item }">
+          <button
+            :disabled="deletingImage?.id === item.id && isDeleting"
+            class="btn btn-error btn-xs"
+            @click="deleteImage(item)"
+          >
+            Delete
+            <div
+              v-if="deletingImage?.id === item.id && isDeleting"
+              class="loading loading-xs loading-spinner"
+            />
+            <Icon v-else name="tabler:trash-x-filled" size="16" />
+          </button>
+        </template>
+      </ImageList>
+      <AppDialog
+        title="Are you sure?"
+        description="Deleting this image cannot be undone. Do you really want to do this?"
+        cancel-label="Cancel"
+        confirm-label="Yes, delete this image!"
+        confirm-class="btn-error"
+        :is-open="isOpen"
+        @on-closed="onDialogClose"
+        @on-confirmed="confirmDelete"
+      />
     </div>
   </div>
 </template>
