@@ -42,6 +42,19 @@ function setLocation(result: NominatimResult) {
 </script>
 <template>
   <div class="flex flex-col gap-2">
+    <div class="text-xs italic flex justify-end gap-1">
+      <span>
+        Search result provided by:
+        <a
+          target="_blank"
+          rel="noopener nofollow"
+          class="link"
+          href="https://nominatim.openstreetmap.org/ui/search.html"
+        >
+          nominatim
+        </a>
+      </span>
+    </div>
     <Form
       ref="form"
       class="flex flex-col gap-2 items-center"

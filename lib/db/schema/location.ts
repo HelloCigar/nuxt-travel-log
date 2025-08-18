@@ -17,7 +17,7 @@ export const location = sqliteTable(
     long: real().notNull(),
     userId: int()
       .notNull()
-      .references(() => user.id),
+      .references(() => user.id, { onDelete: "cascade" }),
     createdAt: int()
       .notNull()
       .$default(() => Date.now()),
