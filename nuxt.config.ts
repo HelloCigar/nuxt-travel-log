@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     "@vee-validate/nuxt",
     "nuxt-csurf",
     "nuxt-maplibre",
+    "nuxt-easy-lightbox",
   ],
   colorMode: {
     dataValue: "theme",
