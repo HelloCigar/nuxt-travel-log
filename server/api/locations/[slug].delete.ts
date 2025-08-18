@@ -9,9 +9,12 @@ export default defineAuthenticatedEventHandler(async (event) => {
     method: "GET"
   })
 
-  location.locationLogs.forEach(async(locationLog) => {
-    await deleteImagesByLogId(event.context.user.id, locationLog.id)
-  });
+  // Wait for all S3 deletions to complete in parallel
+  await Promise.all(
+    location.locationLogs.map(async (locationLog) => {
+      return deleteImagesByLogId(event.context.user.id, locationLog.id);
+    })
+  );
 
   const deleted = await removeLocationBySlug(slug, event.context.user.id);
 
