@@ -18,7 +18,7 @@ const config = useRuntimeConfig();
 <template>
   <div class="flex mt-2 gap-2 overflow-auto">
     <div
-      v-for="image in images"
+      v-for="(image, index) in images"
       :key="image.id"
       class="card card-compact h-40 w-64 shrink-0 flex items-center justify-center bg-base-300"
     >
@@ -26,7 +26,7 @@ const config = useRuntimeConfig();
         <img
           class="size-full object-cover hover:cursor-pointer"
           :src="`${config.public.s3BucketUrl}/${image.key}`"
-          @click="showImg(image.id)"
+          @click="showImg(index)"
         />
         <slot :image />
       </div>
