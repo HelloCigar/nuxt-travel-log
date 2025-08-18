@@ -29,6 +29,8 @@ export default defineAuthenticatedEventHandler(async (event) => {
             Bucket: env.S3_BUCKET,
             Key: deleted.key
         });
+        console.log(deleted.key);
+        
 
         await client.send(command)
     }

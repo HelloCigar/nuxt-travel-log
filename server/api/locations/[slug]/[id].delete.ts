@@ -3,6 +3,7 @@ import { deleteLocationLog } from "~~/lib/db/queries/location-log";
 
 import defineAuthenticatedEventHandler from "../../../utils/define-authenticated-event-handler";
 import z from "zod";
+import deleteImagesByLogId from "~~/server/utils/delete-images-by-log-id";
 export default defineAuthenticatedEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug') as string;
   const location = await findLocation(slug, event.context.user.id);
@@ -31,6 +32,9 @@ export default defineAuthenticatedEventHandler(async (event) => {
         statusMessage: "Location log not found."
     }))
   }
+
+  await deleteImagesByLogId(event.context.user.id, Number(id))
+
   
   setResponseStatus(event, 204)
 });

@@ -10,10 +10,10 @@ export const locationLogImage = sqliteTable("locationLogImage", {
   key: text().notNull(),
   locationLogId: int()
     .notNull()
-    .references(() => locationLog.id),
+    .references(() => locationLog.id, { onDelete: "cascade" }),
   userId: int()
     .notNull()
-    .references(() => user.id),
+    .references(() => user.id, { onDelete: "cascade" }),
   createdAt: int()
     .notNull()
     .$default(() => Date.now()),

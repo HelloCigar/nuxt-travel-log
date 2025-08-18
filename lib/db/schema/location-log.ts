@@ -17,10 +17,10 @@ export const locationLog = sqliteTable("locationLog", {
   long: real().notNull(),
   userId: int()
     .notNull()
-    .references(() => user.id),
+    .references(() => user.id, { onDelete: "cascade" }),
   locationId: int()
     .notNull()
-    .references(() => location.id),
+    .references(() => location.id, { onDelete: "cascade" }),
   createdAt: int()
     .notNull()
     .$default(() => Date.now()),
