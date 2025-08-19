@@ -2,11 +2,11 @@
 
 A web app that allows users to log locations and events on a map view and upload images.
 
-Based on this [tutorial](https://nuxt.com/docs/getting-started/introduction) with some spice of my own.
+Based on this [tutorial](https://youtu.be/DK93dqmJJYg?si=cBale51XMN_qlrwj) with some spice of my own.
 
 ## Technologies and tools used:
 
-- [Nuxt](nuxt.com) - The Progressive Web Framework. Handles file-based routing, SSR, etc.
+- [Nuxt](https://nuxt.com) - The Progressive Web Framework. Handles file-based routing, SSR, etc.
 - [Better-Auth](https://www.better-auth.com/) - For handling Google and Github OAuth
 - [VueJS](https://vuejs.org/) - The Progressive JavaScript Framework
 - [Drizzle-ORM](https://orm.drizzle.team/) - The better way of talking to a database using TypeScript
