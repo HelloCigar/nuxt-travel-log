@@ -15,6 +15,7 @@ Based on this [tutorial](https://nuxt.com/docs/getting-started/introduction) wit
 - [MapLibre](https://maplibre.org/) - Map view wrapper for fast rendering on the browser.
 - [OpenFreeMap](https://openfreemap.org/) - Map provider.
 - [Nominatim](https://nominatim.org/) - Locations search results provider.
+- [Amazon S3](https://aws.amazon.com/s3/) - For image storage.
 
 ## Setup
 
