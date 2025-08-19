@@ -1,6 +1,20 @@
-# Nuxt Minimal Starter
+# Nuxt Travel Log
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A web app that allows users to log locations and events on a map view and upload images.
+
+Based on this [tutorial](https://nuxt.com/docs/getting-started/introduction) with some spice of my own.
+
+## Technologies and tools used:
+
+- [Nuxt](nuxt.com) - The Progressive Web Framework. Handles file-based routing, SSR, etc.
+- [Better-Auth](https://www.better-auth.com/) - For handling Google and Github OAuth
+- [VueJS](https://vuejs.org/) - The Progressive JavaScript Framework
+- [Drizzle-ORM](https://orm.drizzle.team/) - The better way of talking to a database using TypeScript
+- [Tailwind](https://tailwindcss.com/) - CSS classes to style directly in the html
+- [DaisyUI](https://daisyui.com/) - Makes TailwindCSS enjoyable to use
+- [MapLibre](https://maplibre.org/) - Map view wrapper for fast rendering on the browser.
+- [OpenFreeMap](https://openfreemap.org/) - Map provider.
+- [Nominatim](https://nominatim.org/) - Locations search results provider.
 
 ## Setup
 
@@ -20,6 +34,10 @@ yarn install
 bun install
 ```
 
+## Environment variables
+
+See [env.example](https://github.com/HelloCigar/nuxt-travel-log/blob/master/.env.example) file for reference before running the app.
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
@@ -37,39 +55,3 @@ yarn dev
 # bun
 bun run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
